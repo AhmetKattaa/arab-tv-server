@@ -75,15 +75,6 @@
       "epgId": "AlArabyTV2.qa"
     },
     {
-      "id": "france24-ar",
-      "number": 9,
-      "name": "فرانس 24 عربي",
-      "url": "https://static.france24.com/live/F24_AR_HI_HLS/live_web.m3u8",
-      "logo": "",
-      "category": "أخبار",
-      "epgId": "France24Arabic.fr"
-    },
-    {
       "id": "dw-arabic",
       "number": 10,
       "name": "DW عربية",
@@ -397,6 +388,15 @@
       "url": "https://shls-cartoon-net-prod-dub.shahid.net/out/v1/dc4aa87372374325a66be458f29eab0f/index.m3u8",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Cartoon_Network_Arabic_logo.png/512px-Cartoon_Network_Arabic_logo.png",
       "epgId": "CartoonNetworkArabic.ae"
+    },
+    {
+      "number": 21,
+      "id": "national-geographic-abu-dhabi",
+      "name": "ناشيونال جيوغرافيك أبوظبي",
+      "category": "وثائقية",
+      "url": "https://admn-live-cdn-lb.starzplayarabia.com/out/v1/admn_tv_enc/national_geo/national_geo_hls_nd/index.m3u8",
+      "logo": "https://i.imgur.com/fNA00VF.png",
+      "epgId": "NationalGeographicAbuDhabi.ae"
     }
   ]
 }
