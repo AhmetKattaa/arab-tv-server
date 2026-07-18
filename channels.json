@@ -1,0 +1,456 @@
+{
+  "_comment": "Tüm yayın adresleri 15 Temmuz 2026'da tek tek doğrulanmıştır (manifest + varyant + segment testi). Kaynak: resmî yayıncı CDN'leri ve iptv-org bakımlı listesi. Doğrulanamayan kanallar (Almajd Kur'an, Alnas, Alrahma, Alhekma, Zad, Qaf) eklenmemiştir — yayınları yalnızca YouTube/şifreli. Yeni kanal için bu diziye kayıt ekleyin veya Ayarlar > Kanal Listesi Kaynağı'na M3U/JSON adresi girin.",
+  "epgUrl": "",
+  "channels": [
+    {
+      "id": "aljazeera-ar",
+      "number": 1,
+      "name": "قناة الجزيرة",
+      "url": "https://live-hls-web-aja.getaj.net/AJA/index.m3u8",
+      "logo": "https://i.imgur.com/7bRVpnu.png",
+      "category": "أخبار",
+      "epgId": "AlJazeera.qa"
+    },
+    {
+      "id": "aljazeera-mubasher",
+      "number": 2,
+      "name": "الجزيرة مباشر",
+      "url": "https://live-hls-web-ajm.getaj.net/AJM/index.m3u8",
+      "logo": "https://i.imgur.com/X80DQvF.png",
+      "category": "أخبار",
+      "epgId": "AlJazeeraMubasher.qa"
+    },
+    {
+      "id": "alarabiya",
+      "number": 3,
+      "name": "العربية",
+      "url": "https://av.alarabiya.net/alarabiapublish/alarabiya.smil/playlist.m3u8",
+      "logo": "https://shahid.mbc.net/mediaObject/a4c125db-ede8-4970-9eed-963948c78651?height=auto&width=512&croppingPoint=&version=1&type=png",
+      "category": "أخبار",
+      "epgId": "Alarabiya.ae"
+    },
+    {
+      "id": "alhadath",
+      "number": 4,
+      "name": "الحدث",
+      "url": "https://av.alarabiya.net/alarabiapublish/alhadath.smil/playlist.m3u8",
+      "logo": "https://i.imgur.com/De4SEWE.png",
+      "category": "أخبار",
+      "epgId": "AlHadath.sa"
+    },
+    {
+      "id": "skynews-arabia",
+      "number": 5,
+      "name": "سكاي نيوز عربية",
+      "url": "https://stream.skynewsarabia.com/hls/sna_720.m3u8",
+      "logo": "https://i.imgur.com/SvjU4h6.png",
+      "category": "أخبار",
+      "epgId": "SkyNewsArabia.ae"
+    },
+    {
+      "id": "asharq-news",
+      "number": 6,
+      "name": "الشرق للأخبار",
+      "url": "https://live-news.asharq.com/asharq.m3u8",
+      "logo": "https://i.imgur.com/bqRC3sl.png",
+      "category": "أخبار",
+      "epgId": "AsharqNews.sa"
+    },
+    {
+      "id": "alaraby-tv",
+      "number": 7,
+      "name": "التلفزيون العربي",
+      "url": "https://live.kwikmotion.com/alaraby1live/alaraby_abr/playlist.m3u8",
+      "logo": "https://i.imgur.com/YMqWEe4.png",
+      "category": "أخبار",
+      "epgId": "AlArabyTV.qa"
+    },
+    {
+      "id": "alaraby-tv2",
+      "number": 8,
+      "name": "التلفزيون العربي 2",
+      "url": "https://live.kwikmotion.com/alaraby2live/alaraby2.smil/playlist.m3u8",
+      "logo": "https://i.imgur.com/Gp5mNea.png",
+      "category": "أخبار",
+      "epgId": "AlArabyTV2.qa"
+    },
+    {
+      "id": "france24-ar",
+      "number": 9,
+      "name": "فرانس 24 عربي",
+      "url": "https://static.france24.com/live/F24_AR_HI_HLS/live_web.m3u8",
+      "logo": "",
+      "category": "أخبار",
+      "epgId": "France24Arabic.fr"
+    },
+    {
+      "id": "dw-arabic",
+      "number": 10,
+      "name": "DW عربية",
+      "url": "https://dwamdstream103.akamaized.net/hls/live/2015526/dwstream103/index.m3u8",
+      "logo": "https://i.imgur.com/8MRNFb9.png",
+      "category": "أخبار",
+      "epgId": "DW.de"
+    },
+    {
+      "id": "trt-arabi",
+      "number": 11,
+      "name": "TRT عربي",
+      "url": "https://tv-trtarabi.medya.trt.com.tr/master.m3u8",
+      "logo": "https://i.imgur.com/dEfI2M9.png",
+      "category": "أخبار",
+      "epgId": "TRTArabi.tr"
+    },
+    {
+      "id": "syria-tv",
+      "number": 12,
+      "name": "تلفزيون سوريا",
+      "url": "https://svs.itworkscdn.net/syriatvlive/syriatv.smil/playlist_dvr.m3u8",
+      "logo": "https://www.syria.tv/themes/custom/syriatv/assets/images/stvshareimage-default.png",
+      "category": "سوريا",
+      "epgId": ""
+    },
+    {
+      "id": "al-thania-tv",
+      "number": 13,
+      "name": "سوريا الثانية",
+      "url": "https://live.kwikmotion.com/syriatv02live/syriatv02.smil/playlist.m3u8",
+      "logo": "https://www.althania.tv/themes/custom/althania/Default.png",
+      "category": "سوريا",
+      "epgId": ""
+    },
+    {
+      "id": "halab-today",
+      "number": 14,
+      "name": "حلب اليوم",
+      "url": "https://halabtoday-live.lg.mncdn.com/halabtoday/livestream/playlist.m3u8",
+      "logo": "https://halabtodaytv.net/wp-content/uploads/2025/04/cropped-Logo-icon-270x270.png",
+      "category": "سوريا",
+      "epgId": ""
+    },
+    {
+      "id": "aljazeera-doc",
+      "number": 20,
+      "name": "الجزيرة الوثائقية",
+      "url": "https://live-hls-web-ajd.getaj.net/AJD/index.m3u8",
+      "logo": "https://i.imgur.com/5dNJlLo.png",
+      "category": "وثائقية",
+      "epgId": "AlJazeeraDocumentary.qa"
+    },
+    {
+      "id": "quran-tv",
+      "number": 30,
+      "name": "قناة القرآن الكريم",
+      "url": "https://win.holol.com/live/quran/playlist.m3u8",
+      "logo": "",
+      "category": "دينية",
+      "epgId": ""
+    },
+    {
+      "id": "sunnah-tv",
+      "number": 31,
+      "name": "قناة السنة النبوية",
+      "url": "https://win.holol.com/live/sunnah/playlist.m3u8",
+      "logo": "https://aloula.faulio.com/storage/mediagallery/33/92/fullhd_879e557011826f507a045b4e0b4c3b57ba93edae.png",
+      "category": "دينية",
+      "epgId": "AlSunnahAlNabawiyahTV.sa"
+    },
+    {
+      "id": "iqraa-arabic",
+      "number": 32,
+      "name": "قناة اقرأ الفضائية",
+      "url": "https://playlist.fasttvcdn.com/pl/dlkqw1ftuvuuzkcb4pxdcg/Iqraafasttv3/playlist.m3u8",
+      "logo": "https://i.imgur.com/HPVsIa4.png",
+      "category": "دينية",
+      "epgId": "IqraaArabic.sa"
+    },
+    {
+      "id": "iqraa-quran",
+      "number": 33,
+      "name": "اقرأ قرآن",
+      "url": "https://playlist.fasttvcdn.com/pl/dlkqw1ftuvuuzkcb4pxdcg/Iqraafasttv2/playlist.m3u8",
+      "logo": "https://i.imgur.com/HPVsIa4.png",
+      "category": "دينية",
+      "epgId": "IqraaQuran.sa"
+    },
+    {
+      "id": "alresalah",
+      "number": 34,
+      "name": "قناة الرسالة",
+      "url": "https://rotana.hibridcdn.net/rotananet/risala_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "logo": "https://i.imgur.com/7o4HgrP.png",
+      "category": "دينية",
+      "epgId": "AlResalah.sa"
+    },
+    {
+      "id": "makkah-tv",
+      "number": 35,
+      "name": "قناة مكة المكرمة",
+      "url": "https://media2.streambrothers.com:1936/8122/8122/playlist.m3u8",
+      "logo": "https://i.ibb.co/r2k71w5N/download.png",
+      "category": "دينية",
+      "epgId": "MakkahTV.sa"
+    },
+    {
+      "id": "quran-radio-sa",
+      "number": 36,
+      "name": "إذاعة القرآن الكريم",
+      "url": "https://live.kwikmotion.com/sbrksaquranradiolive/srpksaquranradio/playlist.m3u8",
+      "logo": "https://aloula.faulio.com/storage/mediagallery/14/da/fullhd_823bc2fe722ede75410492d57fd6c201208b4224.png",
+      "category": "دينية",
+      "epgId": "HolyQuranRadio.sa"
+    },
+    {
+      "id": "mbc1",
+      "number": 40,
+      "name": "إم بي سي 1",
+      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-1/15cf99af5de54063fdabfefe66adc075/index.m3u8",
+      "logo": "https://i.imgur.com/CiA3plN.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "MBC1.ae"
+    },
+    {
+      "id": "mbc-drama",
+      "number": 41,
+      "name": "إم بي سي دراما",
+      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-drama/2c28a458e2f3253e678b07ac7d13fe71/index.m3u8",
+      "logo": "https://i.imgur.com/g5PWnqp.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "MBCDrama.ae"
+    },
+    {
+      "id": "mbc4",
+      "number": 42,
+      "name": "إم بي سي 4",
+      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-4/24f134f1cd63db9346439e96b86ca6ed/index.m3u8",
+      "logo": "https://i.imgur.com/BcXASJp.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "MBC4.ae"
+    },
+    {
+      "id": "mbc5",
+      "number": 43,
+      "name": "إم بي سي 5",
+      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-5/ee6b000cee0629411b666ab26cb13e9b/index.m3u8",
+      "logo": "https://i.imgur.com/fRWaDyF.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "MBC5.ae"
+    },
+    {
+      "id": "mbc-masr",
+      "number": 44,
+      "name": "إم بي سي مصر",
+      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-masr/956eac069c78a35d47245db6cdbb1575/index.m3u8",
+      "logo": "https://i.imgur.com/o2elx0u.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "MBCMasr.eg"
+    },
+    {
+      "id": "mbc-masr-drama",
+      "number": 45,
+      "name": "إم بي سي مصر دراما",
+      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-masr-drama/567b703c19ede6598222de81b0e4508b/index.m3u8",
+      "logo": "https://media0070.elcinema.com/tvguide/1399_1.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "MBCMasrDrama.sa"
+    },
+    {
+      "id": "mbc-bollywood",
+      "number": 46,
+      "name": "إم بي سي بوليوود",
+      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-bollywood/546eb40d7dcf9a209255dd2496903764/index.m3u8",
+      "logo": "https://i.imgur.com/TTAGFHG.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "MBCBollywood.ae"
+    },
+    {
+      "id": "aflam",
+      "number": 47,
+      "name": "أفلام",
+      "url": "https://shd-amg-fast.edgenextcdn.net/tx001/playlist.m3u8",
+      "logo": "https://i.imgur.com/cTLj7Yt.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "Aflam.sa"
+    },
+    {
+      "id": "rotana-cinema",
+      "number": 48,
+      "name": "روتانا سينما",
+      "url": "https://rotana.hibridcdn.net/rotananet/cinema_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "logo": "https://i.imgur.com/pGgp38I.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "RotanaCinemaKSA.sa"
+    },
+    {
+      "id": "rotana-drama",
+      "number": 49,
+      "name": "روتانا دراما",
+      "url": "https://rotana.hibridcdn.net/rotananet/drama_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "logo": "https://i.imgur.com/btnhPjZ.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "RotanaDrama.sa"
+    },
+    {
+      "id": "rotana-classic",
+      "number": 50,
+      "name": "روتانا كلاسيك",
+      "url": "https://rotana.hibridcdn.net/rotananet/classical_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "logo": "https://i.imgur.com/pMMUvkt.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "RotanaClassic.sa"
+    },
+    {
+      "id": "rotana-comedy",
+      "number": 51,
+      "name": "روتانا كوميدي",
+      "url": "https://rotana.hibridcdn.net/rotananet/comedy_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "logo": "https://i.imgur.com/IlT8U6S.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "RotanaComedy.sa"
+    },
+    {
+      "id": "thikrayat",
+      "number": 52,
+      "name": "ذكريات",
+      "url": "https://aloula-redirect.vercel.app/3/playlist.m3u8",
+      "logo": "https://i.imgur.com/AKa1X9d.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "ThikrayatTV.sa"
+    },
+    {
+      "id": "bab-al-hara",
+      "number": 53,
+      "name": "باب الحارة",
+      "url": "https://shd-amg-fast.edgenextcdn.net/tx010/playlist.m3u8",
+      "logo": "https://i.imgur.com/QtlnZbq.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "BabAlHara.sa"
+    },
+    {
+      "id": "alsouriya",
+      "number": 54,
+      "name": "السورية",
+      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-al-souriya-tv/e3150760fa5fd62776225433b8c3d406/index.m3u8",
+      "logo": "https://i.imgur.com/8FILgXT.jpeg",
+      "category": "سوريا",
+      "epgId": "AlSouriyaTV.sy"
+    },
+    {
+      "id": "maraya",
+      "number": 55,
+      "name": "مرايا",
+      "url": "https://shd-amg-fast.edgenextcdn.net/tx008/playlist.m3u8",
+      "logo": "https://shahid.mbc.net/mediaObject/d089a559-4f41-4def-a786-f98fcfbf0464?height=auto&width=288&croppingPoint=&version=1&type=png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "Maraya.sa"
+    },
+    {
+      "id": "cbc",
+      "number": 56,
+      "name": "سي بي سي",
+      "url": "https://flu.systemnet.tv/CBC/index.m3u8",
+      "logo": "https://i.imgur.com/8apNaLP.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "CBC.eg"
+    },
+    {
+      "id": "cbc-drama",
+      "number": 57,
+      "name": "سي بي سي دراما",
+      "url": "https://flu.systemnet.tv/CBCDrama/index.m3u8",
+      "logo": "https://i.imgur.com/I8YdakH.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "CBCDrama.eg"
+    },
+    {
+      "id": "roya-drama",
+      "number": 58,
+      "name": "رؤيا دراما",
+      "url": "https://playlist.fasttvcdn.com/pl/a2le4pbpa6rpzv147haf4w/drama/playlist.m3u8",
+      "logo": "https://i.imgur.com/V7I0MVf.png",
+      "category": "مسلسلات وأفلام",
+      "epgId": "RoyaDrama.jo"
+    },
+    {
+      "id": "spacetoon",
+      "number": 60,
+      "name": "سبيستون",
+      "url": "https://live-uae-next.spacetoongo.com/ST_MENA_NEXT/hls/r9p2hjipmw2kl.m3u8",
+      "logo": "https://upload.wikimedia.org/wikipedia/en/2/2b/Spacetoon_logo.png",
+      "category": "أطفال",
+      "epgId": "SpacetoonArabic.ae"
+    },
+    {
+      "id": "mbc3",
+      "number": 61,
+      "name": "إم بي سي 3",
+      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-3-usa/5d58265a862a476dc7f97694addb5ded/index.m3u8",
+      "logo": "https://i.imgur.com/PVt8OPN.png",
+      "category": "أطفال",
+      "epgId": "MBC3USA.us"
+    },
+    {
+      "id": "roya-kids",
+      "number": 62,
+      "name": "رؤيا كيدز",
+      "url": "https://playlist.fasttvcdn.com/pl/ptllxjd03j6g9oxxjdfapg/roya-kids/playlist.m3u8",
+      "logo": "https://i.imgur.com/acuCGF8.png",
+      "category": "أطفال",
+      "epgId": "RoyaKids.jo"
+    },
+    {
+      "id": "roya-kids-originals",
+      "number": 63,
+      "name": "رؤيا كيدز أوريجنالز",
+      "url": "https://playlist.fasttvcdn.com/pl/ptllxjd03j6g9oxxjdfapg/roya-kids-originals/playlist.m3u8",
+      "logo": "https://i.imgur.com/acuCGF8.png",
+      "category": "أطفال",
+      "epgId": "RoyaKidsOriginals.jo"
+    },
+    {
+      "id": "amou-yazid",
+      "number": 64,
+      "name": "عمو يزيد",
+      "url": "http://mkstream.servehttp.com:1940/AmouYazid/ay1/playlist.m3u8",
+      "logo": "https://i.imgur.com/L8UPGPC.png",
+      "category": "أطفال",
+      "epgId": "AmouYazidTV.dz"
+    },
+    {
+      "id": "atfal-mawaheb",
+      "number": 65,
+      "name": "أطفال ومواهب",
+      "url": "https://5aafcc5de91f1.streamlock.net/atfal1.com/atfal2/playlist.m3u8",
+      "logo": "https://i.imgur.com/Y2BqP9m.png",
+      "category": "أطفال",
+      "epgId": "AtfalMawahebTV.sa"
+    },
+    {
+      "id": "test-apple",
+      "number": 90,
+      "name": "بث تجريبي 1 (Apple)",
+      "url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
+      "logo": "",
+      "category": "تجريبي",
+      "epgId": ""
+    },
+    {
+      "id": "test-mux",
+      "number": 91,
+      "name": "بث تجريبي 2 (Mux)",
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+      "logo": "",
+      "category": "تجريبي",
+      "epgId": ""
+    },
+    {
+      "id": "test-unified",
+      "number": 92,
+      "name": "بث تجريبي 3 (Tears of Steel)",
+      "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+      "logo": "",
+      "category": "تجريبي",
+      "epgId": ""
+    }
+  ]
+}

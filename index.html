@@ -1,0 +1,1283 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>إدارة قنوات Kattaa TV</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"
+          integrity="sha384-w6Gb3fXHb5e1LUYa/hYA5Q41bEDglN5ZPCG7Jvnoo8/X90oGnlPqBlBJCe38mEMm"
+          crossorigin="anonymous" defer></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --panel: #121a2f;
+      --panel-2: #18233d;
+      --text: #f5f7ff;
+      --muted: #aab4cf;
+      --border: #2a385a;
+      --accent: #66a3ff;
+      --danger: #ff6b7a;
+      --ok: #56d39b;
+      --warn: #ffcf70;
+      --shadow: 0 14px 40px rgba(0,0,0,.28);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #0b1020, #0d1427 45%, #0b1020);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .container {
+      width: min(1500px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 26px 0 50px;
+    }
+
+    .hero {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    h1 { margin: 0 0 7px; font-size: clamp(1.55rem, 3vw, 2.35rem); }
+    .subtitle { margin: 0; color: var(--muted); line-height: 1.7; }
+
+    .status {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 15px;
+      color: var(--muted);
+      min-width: 250px;
+      box-shadow: var(--shadow);
+    }
+    .status strong { color: var(--text); }
+
+    .toolbar, .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      background: rgba(18,26,47,.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .toolbar { margin-bottom: 12px; }
+    .meta-bar { margin-bottom: 16px; }
+
+    .field-grow { flex: 1 1 280px; }
+
+    input, select {
+      width: 100%;
+      color: var(--text);
+      background: #0d152a;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 11px 12px;
+      outline: none;
+    }
+    input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(102,163,255,.12); }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 11px;
+      transition: .18s ease;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: #48618f; }
+    .btn:disabled { opacity: .55; cursor: wait; transform: none; }
+    .btn-primary { background: #245fbd; border-color: #3274d8; }
+    .btn-danger { background: #6f2732; border-color: #a6404d; }
+    .btn-success { background: #1e684d; border-color: #2c9670; }
+    .btn-ghost { background: transparent; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 14px;
+    }
+    .stat-label { color: var(--muted); font-size: .88rem; }
+    .stat-value { font-size: 1.45rem; font-weight: 800; margin-top: 5px; }
+    .stat-value .ok { color: var(--ok); }
+    .stat-value .bad { color: var(--danger); }
+
+    .table-wrap {
+      overflow: auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1080px;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+      vertical-align: middle;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #17213a;
+      color: #d9e4ff;
+      z-index: 1;
+    }
+
+    tr:hover td { background: rgba(255,255,255,.025); }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #fff;
+      padding: 4px;
+      display: block;
+    }
+
+    .logo-fallback {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: #263452;
+      color: var(--muted);
+      font-size: .7rem;
+      text-align: center;
+    }
+
+    .channel-name { font-weight: 750; }
+    .small { font-size: .82rem; color: var(--muted); }
+    .url-cell {
+      max-width: 260px;
+      direction: ltr;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #b9d2ff;
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--muted);
+      padding: 5px 11px;
+      font-size: .8rem;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    .badge.ok      { background: #133527; border-color: #2c9670; color: var(--ok); }
+    .badge.fail    { background: #3c1620; border-color: #a6404d; color: var(--danger); }
+    .badge.warn    { background: #33290f; border-color: #8a7433; color: var(--warn); }
+    .badge.busy    { background: #14294a; border-color: #3274d8; color: var(--accent); }
+
+    .actions { display: flex; gap: 7px; }
+    .actions .btn { padding: 7px 10px; }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 45px 15px;
+    }
+
+    dialog {
+      width: min(760px, calc(100% - 24px));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--panel);
+      color: var(--text);
+      padding: 0;
+      box-shadow: 0 30px 90px rgba(0,0,0,.55);
+    }
+    dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(3px); }
+
+    dialog.wide { width: min(980px, calc(100% - 24px)); }
+
+    .modal-head, .modal-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-foot {
+      border-bottom: 0;
+      border-top: 1px solid var(--border);
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .modal-body { padding: 18px; }
+    .modal-title { margin: 0; font-size: 1.25rem; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 13px;
+    }
+
+    label { display: grid; gap: 7px; color: #dbe5ff; }
+    label.full { grid-column: 1 / -1; }
+    .hint { color: var(--muted); font-size: .78rem; line-height: 1.6; }
+
+    .notice {
+      margin-top: 14px;
+      border: 1px solid #6b5d2f;
+      background: #28220f;
+      color: #f3dda0;
+      border-radius: 12px;
+      padding: 11px 13px;
+      line-height: 1.7;
+    }
+    .notice code { direction: ltr; unicode-bidi: embed; }
+
+    .player-box {
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      display: grid;
+    }
+    .player-box video { width: 100%; height: 100%; background: #000; }
+
+    .player-status {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      min-height: 1.5em;
+    }
+    .player-status.ok { color: var(--ok); }
+    .player-status.fail { color: var(--danger); }
+
+    .toast {
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      background: #16243f;
+      border: 1px solid #3d5785;
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: .2s ease;
+      z-index: 999;
+      max-width: min(480px, calc(100% - 36px));
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 780px) {
+      .hero { flex-direction: column; }
+      .status { width: 100%; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      label.full { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>لوحة إدارة قنوات Kattaa TV</h1>
+        <p class="subtitle">
+          إدارة ملف <code>channels.json</code>: إضافة وتعديل وحذف القنوات،
+          ومعاينة البث للتأكد من عمله، ثم الحفظ مباشرة إلى GitHub
+          ليصل التحديث إلى التطبيق عند ضغط زر «تحديث».
+        </p>
+      </div>
+      <div class="status">
+        <div><strong>المصدر:</strong> <span id="sourceLabel">channels.json</span></div>
+        <div><strong>آخر تحميل:</strong> <span id="loadedAt">—</span></div>
+        <div><strong>تغييرات غير محفوظة:</strong> <span id="dirtyState">لا</span></div>
+        <div><strong>مستودع GitHub:</strong> <span id="ghRepoLabel">غير مضبوط</span></div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <button class="btn btn-primary" id="addBtn">＋ إضافة قناة</button>
+      <button class="btn btn-success" id="ghSaveBtn">☁ حفظ إلى GitHub</button>
+      <button class="btn" id="ghSettingsBtn">⚙ إعدادات GitHub</button>
+      <button class="btn" id="checkAllBtn">🔍 فحص كل القنوات</button>
+      <button class="btn" id="downloadBtn">تنزيل channels.json</button>
+      <button class="btn" id="copyBtn">نسخ JSON</button>
+      <button class="btn" id="importBtn">استيراد JSON</button>
+      <button class="btn btn-ghost" id="reloadBtn">إعادة التحميل من GitHub</button>
+      <input id="fileInput" type="file" accept=".json,application/json" class="hidden" aria-label="اختيار ملف JSON للاستيراد" />
+    </section>
+
+    <section class="meta-bar">
+      <div class="field-grow">
+        <input id="searchInput" aria-label="بحث في القنوات" placeholder="بحث بالاسم أو المعرّف أو التصنيف..." />
+      </div>
+      <div style="min-width:220px">
+        <select id="categoryFilter" aria-label="تصفية حسب التصنيف">
+          <option value="">كل التصنيفات</option>
+        </select>
+      </div>
+      <div style="min-width:190px">
+        <select id="sortSelect" aria-label="طريقة الترتيب">
+          <option value="number">ترتيب حسب الرقم</option>
+          <option value="name">ترتيب حسب الاسم</option>
+          <option value="category">ترتيب حسب التصنيف</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-label">إجمالي القنوات</div>
+        <div class="stat-value" id="totalCount">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">التصنيفات</div>
+        <div class="stat-value" id="categoryCount">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">القنوات الظاهرة</div>
+        <div class="stat-value" id="visibleCount">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">نتيجة الفحص (تعمل / لا تعمل)</div>
+        <div class="stat-value">
+          <span class="ok" id="okCount">0</span> / <span class="bad" id="failCount">0</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>الشعار</th>
+            <th>الرقم</th>
+            <th>الاسم والمعرّف</th>
+            <th>التصنيف</th>
+            <th>رابط البث</th>
+            <th>الحالة</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="channelsBody"></tbody>
+      </table>
+      <div id="emptyState" class="empty hidden">لا توجد قنوات مطابقة.</div>
+    </section>
+
+    <div class="notice">
+      <strong>طريقتان للحفظ:</strong>
+      ① «حفظ إلى GitHub» يكتب الملف مباشرة في المستودع (يتطلب ضبط اسم المستودع ورمز وصول
+      من «إعدادات GitHub» — يُحفظ الرمز في متصفحك فقط).
+      ② أو «تنزيل channels.json» ثم رفع الملف يدويًا بدل النسخة القديمة في المستودع.
+      بعد الحفظ اضغط زر «تحديث» داخل تطبيق التلفاز لتصل القائمة الجديدة.
+    </div>
+  </main>
+
+  <!-- نافذة إضافة/تعديل قناة -->
+  <dialog id="channelDialog">
+    <form id="channelForm">
+      <div class="modal-head">
+        <h2 class="modal-title" id="dialogTitle">إضافة قناة</h2>
+        <button type="button" class="btn btn-ghost" id="closeDialogBtn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-grid">
+          <label>
+            رقم القناة
+            <input id="channelNumber" type="number" min="1" required />
+          </label>
+
+          <label>
+            المعرّف ID
+            <input id="channelId" required placeholder="example-channel" />
+            <span class="hint">يجب أن يكون فريدًا وثابتًا.</span>
+          </label>
+
+          <label>
+            اسم القناة
+            <input id="channelName" required />
+          </label>
+
+          <label>
+            التصنيف
+            <input id="channelCategory" required placeholder="أخبار" />
+          </label>
+
+          <label class="full">
+            رابط البث
+            <input id="channelUrl" type="url" required dir="ltr" placeholder="https://.../playlist.m3u8" />
+          </label>
+
+          <label class="full">
+            رابط الشعار
+            <input id="channelLogo" type="url" dir="ltr" placeholder="https://.../logo.png" />
+          </label>
+
+          <label class="full">
+            EPG ID
+            <input id="channelEpgId" dir="ltr" placeholder="Channel.example" />
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button class="btn btn-primary" type="submit">حفظ</button>
+        <button class="btn" type="button" id="cancelBtn">إلغاء</button>
+        <button class="btn" type="button" id="previewFormBtn">▶ معاينة الرابط</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- نافذة معاينة البث -->
+  <dialog id="previewDialog" class="wide">
+    <div class="modal-head">
+      <h2 class="modal-title" id="previewTitle">معاينة</h2>
+      <button type="button" class="btn btn-ghost" id="closePreviewBtn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="player-box">
+        <video id="previewVideo" controls playsinline></video>
+      </div>
+      <div class="player-status" id="previewStatus"></div>
+      <div class="small" dir="ltr" id="previewUrl" style="margin-top:8px; word-break:break-all;"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" type="button" id="copyUrlBtn">نسخ رابط البث</button>
+      <span class="hint">إذا لم يعمل البث هنا بسبب حماية CORS فقد يعمل داخل التطبيق على التلفاز.</span>
+    </div>
+  </dialog>
+
+  <!-- نافذة إعدادات GitHub -->
+  <dialog id="ghDialog">
+    <form id="ghForm">
+      <div class="modal-head">
+        <h2 class="modal-title">إعدادات GitHub</h2>
+        <button type="button" class="btn btn-ghost" id="closeGhBtn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <label>
+            اسم المستخدم (Owner)
+            <input id="ghOwner" dir="ltr" placeholder="username" />
+          </label>
+          <label>
+            اسم المستودع (Repo)
+            <input id="ghRepo" dir="ltr" placeholder="kattaa-channels" />
+          </label>
+          <label>
+            الفرع (Branch)
+            <input id="ghBranch" dir="ltr" placeholder="main" />
+          </label>
+          <label>
+            مسار الملف
+            <input id="ghPath" dir="ltr" placeholder="channels.json" />
+          </label>
+          <label class="full">
+            رمز الوصول (Fine-grained token)
+            <input id="ghToken" dir="ltr" type="password" placeholder="github_pat_..." autocomplete="off" />
+            <span class="hint">
+              أنشئه من GitHub: Settings ← Developer settings ← Fine-grained tokens،
+              واقصره على هذا المستودع فقط بصلاحية Contents: Read and write.
+              يُحفظ الرمز في متصفح هذا الجهاز فقط (localStorage) ولا يُرفع مع الصفحة.
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-primary" type="submit">حفظ الإعدادات</button>
+        <button class="btn" type="button" id="cancelGhBtn">إلغاء</button>
+        <button class="btn btn-danger" type="button" id="clearGhBtn">مسح الرمز</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "arabtv_channels_admin_draft_v1";
+    const GH_KEY = "arabtv_channels_admin_github_v1";
+
+    let catalog = {
+      _comment: "",
+      epgUrl: "",
+      channels: []
+    };
+    let editingOriginalId = null;
+    let dirty = false;
+
+    // حالة فحص البث لكل قناة: idle | busy | ok | fail | warn
+    const streamStatus = new Map();
+
+    // إعدادات GitHub (تُحفظ محليًا في المتصفح)
+    let gh = { owner: "", repo: "", branch: "main", path: "channels.json", token: "" };
+
+    const $ = (id) => document.getElementById(id);
+
+    const body = $("channelsBody");
+    const dialog = $("channelDialog");
+    const form = $("channelForm");
+    const previewDialog = $("previewDialog");
+    const ghDialog = $("ghDialog");
+
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function safeUrl(value = "") {
+      try {
+        const url = new URL(value, window.location.href);
+        return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+      } catch {
+        return "";
+      }
+    }
+
+    function showToast(message) {
+      const toast = $("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 3200);
+    }
+
+    function setDirty(value) {
+      dirty = value;
+      $("dirtyState").textContent = value ? "نعم" : "لا";
+      $("dirtyState").style.color = value ? "#ffcf70" : "#56d39b";
+      if (value) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(catalog));
+      } else {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+
+    function normalizeCatalog(data) {
+      if (!data || !Array.isArray(data.channels)) {
+        throw new Error("الملف لا يحتوي على مصفوفة channels صحيحة.");
+      }
+
+      const normalized = {
+        ...data,
+        epgUrl: data.epgUrl || "",
+        channels: data.channels.map((channel, index) => ({
+          id: String(channel.id || `channel-${index + 1}`),
+          number: Number(channel.number || index + 1),
+          name: String(channel.name || "قناة بدون اسم"),
+          url: String(channel.url || ""),
+          logo: String(channel.logo || ""),
+          category: String(channel.category || "غير مصنف"),
+          epgId: String(channel.epgId || "")
+        }))
+      };
+
+      const ids = new Set();
+      for (const channel of normalized.channels) {
+        if (ids.has(channel.id)) {
+          throw new Error(`يوجد معرّف مكرر: ${channel.id}`);
+        }
+        ids.add(channel.id);
+      }
+
+      return normalized;
+    }
+
+    // ===== تحميل الملف =====
+
+    /** عند ضبط إعدادات GitHub يُقرأ الملف من raw.githubusercontent مباشرة
+        (يتجاوز تأخر نشر GitHub Pages)؛ وإلا من نفس المجلد. */
+    function sourceRequest() {
+      if (gh.owner && gh.repo) {
+        const url = `https://raw.githubusercontent.com/${gh.owner}/${gh.repo}/${gh.branch || "main"}/${gh.path || "channels.json"}?ts=${Date.now()}`;
+        const headers = gh.token ? { Authorization: `Bearer ${gh.token}` } : {};
+        return { url, headers, label: `${gh.owner}/${gh.repo}` };
+      }
+      return { url: `channels.json?ts=${Date.now()}`, headers: {}, label: "channels.json" };
+    }
+
+    async function loadFromServer(ignoreDraft = false) {
+      try {
+        if (!ignoreDraft) {
+          const draft = localStorage.getItem(STORAGE_KEY);
+          if (draft) {
+            catalog = normalizeCatalog(JSON.parse(draft));
+            setDirty(true);
+            $("sourceLabel").textContent = "مسودة محفوظة في المتصفح";
+            $("loadedAt").textContent = new Date().toLocaleString("ar");
+            render();
+            showToast("تم استرجاع تعديلاتك غير المحفوظة.");
+            return;
+          }
+        }
+
+        const source = sourceRequest();
+        const response = await fetch(source.url, { cache: "no-store", headers: source.headers });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        catalog = normalizeCatalog(await response.json());
+        $("sourceLabel").textContent = source.label;
+        $("loadedAt").textContent = new Date().toLocaleString("ar");
+        setDirty(false);
+        render();
+      } catch (error) {
+        console.error(error);
+        body.innerHTML = "";
+        $("emptyState").classList.remove("hidden");
+        $("emptyState").textContent =
+          "تعذر تحميل channels.json. تأكد من وجوده بجانب index.html وتشغيل الصفحة عبر GitHub Pages أو خادم محلي.";
+        showToast("فشل تحميل ملف القنوات.");
+      }
+    }
+
+    // ===== العرض =====
+
+    function getFilteredChannels() {
+      const query = $("searchInput").value.trim().toLowerCase();
+      const category = $("categoryFilter").value;
+      const sort = $("sortSelect").value;
+
+      const result = catalog.channels.filter((channel) => {
+        const haystack = `${channel.name} ${channel.id} ${channel.category} ${channel.epgId}`.toLowerCase();
+        return (!query || haystack.includes(query)) &&
+               (!category || channel.category === category);
+      });
+
+      result.sort((a, b) => {
+        if (sort === "name") return a.name.localeCompare(b.name, "ar");
+        if (sort === "category") {
+          return a.category.localeCompare(b.category, "ar") ||
+                 a.number - b.number;
+        }
+        return a.number - b.number;
+      });
+
+      return result;
+    }
+
+    function renderCategoryFilter() {
+      const current = $("categoryFilter").value;
+      const categories = [...new Set(catalog.channels.map(c => c.category).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b, "ar"));
+
+      $("categoryFilter").innerHTML =
+        `<option value="">كل التصنيفات</option>` +
+        categories.map(category =>
+          `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`
+        ).join("");
+
+      if (categories.includes(current)) $("categoryFilter").value = current;
+      $("categoryCount").textContent = categories.length;
+    }
+
+    function statusBadge(channel) {
+      const info = streamStatus.get(channel.id) || { state: "idle", detail: "" };
+      const map = {
+        idle: ["", "لم يُفحص"],
+        busy: ["busy", "جارٍ الفحص…"],
+        ok:   ["ok", "يعمل ✓"],
+        fail: ["fail", "لا يعمل ✗"],
+        warn: ["warn", "غير مؤكد"]
+      };
+      const [cls, label] = map[info.state] || map.idle;
+      const title = info.detail ? escapeHtml(info.detail) : "اضغط للفحص";
+      return `<span class="badge ${cls}" data-action="check" data-id="${escapeHtml(channel.id)}" title="${title}">${label}</span>`;
+    }
+
+    function renderCheckStats() {
+      let ok = 0, fail = 0;
+      for (const { state } of streamStatus.values()) {
+        if (state === "ok") ok++;
+        if (state === "fail") fail++;
+      }
+      $("okCount").textContent = ok;
+      $("failCount").textContent = fail;
+    }
+
+    function render() {
+      renderCategoryFilter();
+
+      const channels = getFilteredChannels();
+      $("totalCount").textContent = catalog.channels.length;
+      $("visibleCount").textContent = channels.length;
+      renderCheckStats();
+
+      body.innerHTML = channels.map(channel => {
+        const logo = safeUrl(channel.logo);
+
+        return `
+          <tr>
+            <td>
+              ${logo
+                ? `<img class="logo" src="${escapeHtml(logo)}" alt="" loading="lazy"
+                     onerror="this.outerHTML='<span class=&quot;logo-fallback&quot;>بلا شعار</span>'">`
+                : `<span class="logo-fallback">بلا شعار</span>`}
+            </td>
+            <td><strong>${escapeHtml(channel.number)}</strong></td>
+            <td>
+              <div class="channel-name">${escapeHtml(channel.name)}</div>
+              <div class="small" dir="ltr">${escapeHtml(channel.id)}</div>
+            </td>
+            <td>${escapeHtml(channel.category)}</td>
+            <td>
+              <div class="url-cell" title="${escapeHtml(channel.url)}">${escapeHtml(channel.url)}</div>
+            </td>
+            <td>${statusBadge(channel)}</td>
+            <td>
+              <div class="actions">
+                <button class="btn btn-primary" data-action="preview" data-id="${escapeHtml(channel.id)}">▶ معاينة</button>
+                <button class="btn" data-action="edit" data-id="${escapeHtml(channel.id)}">تعديل</button>
+                <button class="btn btn-danger" data-action="delete" data-id="${escapeHtml(channel.id)}">حذف</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      $("emptyState").classList.toggle("hidden", channels.length !== 0);
+      $("emptyState").textContent = "لا توجد قنوات مطابقة.";
+    }
+
+    // ===== فحص القنوات =====
+
+    function setStatus(id, state, detail = "") {
+      streamStatus.set(id, { state, detail });
+      render();
+    }
+
+    /** فحص سريع: محاولة جلب ملف البث نفسه. نجاح الجلب يعني أن الخادم يستجيب.
+        فشل fetch قد يعني حجب CORS وليس بالضرورة تعطل القناة، لذلك يُعلَّم "غير مؤكد". */
+    async function checkChannel(channel) {
+      const url = safeUrl(channel.url);
+      if (!url) {
+        setStatus(channel.id, "fail", "رابط البث فارغ أو غير صالح");
+        return;
+      }
+      if (window.location.protocol === "https:" && url.startsWith("http:")) {
+        setStatus(channel.id, "warn",
+          "رابط http لا يمكن اختباره من صفحة https (محتوى مختلط) — جرّبه داخل التطبيق");
+        return;
+      }
+
+      setStatus(channel.id, "busy");
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 12000);
+      try {
+        const response = await fetch(url, { cache: "no-store", signal: controller.signal });
+        if (response.ok) {
+          const text = await response.text();
+          if (text.includes("#EXTM3U") || text.includes("<MPD")) {
+            setStatus(channel.id, "ok", "الخادم يستجيب وقائمة البث صالحة");
+          } else {
+            setStatus(channel.id, "ok", "الخادم يستجيب (المحتوى غير معروف الصيغة)");
+          }
+        } else {
+          setStatus(channel.id, "fail", `الخادم ردّ بخطأ HTTP ${response.status}`);
+        }
+      } catch (error) {
+        if (controller.signal.aborted) {
+          setStatus(channel.id, "fail", "انتهت مهلة الاتصال (12 ثانية)");
+        } else {
+          setStatus(channel.id, "warn",
+            "تعذر الفحص من المتصفح (حجب CORS أو مشكلة شبكة) — جرّب زر المعاينة");
+        }
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    async function checkAllChannels() {
+      const button = $("checkAllBtn");
+      button.disabled = true;
+      button.textContent = "🔍 جارٍ الفحص…";
+      try {
+        const queue = [...catalog.channels];
+        const workers = Array.from({ length: 5 }, async () => {
+          while (queue.length) {
+            const channel = queue.shift();
+            await checkChannel(channel);
+          }
+        });
+        await Promise.all(workers);
+        showToast("انتهى فحص جميع القنوات.");
+      } finally {
+        button.disabled = false;
+        button.textContent = "🔍 فحص كل القنوات";
+      }
+    }
+
+    // ===== معاينة البث =====
+
+    let hlsInstance = null;
+    let onPreviewPlaying = null;
+
+    function setPreviewStatus(message, cls = "") {
+      const el = $("previewStatus");
+      el.textContent = message;
+      el.className = `player-status ${cls}`;
+    }
+
+    function openPreview(channel) {
+      const url = safeUrl(channel.url);
+      $("previewTitle").textContent = `معاينة: ${channel.name} (${channel.number})`;
+      $("previewUrl").textContent = channel.url;
+      previewDialog.showModal();
+
+      const video = $("previewVideo");
+      stopPreviewPlayback();
+
+      if (!url) {
+        setPreviewStatus("رابط البث فارغ أو غير صالح.", "fail");
+        return;
+      }
+      if (window.location.protocol === "https:" && url.startsWith("http:")) {
+        setPreviewStatus(
+          "لا يمكن تشغيل رابط http من صفحة https (يحجبه المتصفح كمحتوى مختلط). جرّب القناة داخل التطبيق على التلفاز.",
+          "fail"
+        );
+        return;
+      }
+
+      setPreviewStatus("جارٍ تحميل البث…");
+
+      onPreviewPlaying = () => {
+        setPreviewStatus("البث يعمل ✓", "ok");
+        streamStatus.set(channel.id, { state: "ok", detail: "تم تشغيله في المعاينة" });
+        render();
+      };
+      video.addEventListener("playing", onPreviewPlaying, { once: true });
+
+      if (window.Hls && Hls.isSupported()) {
+        hlsInstance = new Hls({ enableWorker: true });
+        hlsInstance.loadSource(url);
+        hlsInstance.attachMedia(video);
+        hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play().catch(() => {
+            setPreviewStatus("اضغط زر التشغيل في المشغل لبدء البث.");
+          });
+        });
+        hlsInstance.on(Hls.Events.ERROR, (_event, data) => {
+          if (!data.fatal) return;
+          const reason = data.type === Hls.ErrorTypes.NETWORK_ERROR
+            ? "خطأ شبكة: الخادم لا يستجيب أو يحجب الطلب (CORS)"
+            : `خطأ في التشغيل (${data.details})`;
+          setPreviewStatus(`فشل التشغيل — ${reason}.`, "fail");
+          streamStatus.set(channel.id, { state: "fail", detail: reason });
+          render();
+          hlsInstance.destroy();
+          hlsInstance = null;
+        });
+      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        // Safari: دعم HLS مدمج
+        video.src = url;
+        video.play().catch(() => setPreviewStatus("اضغط زر التشغيل في المشغل لبدء البث."));
+        video.addEventListener("error", () => {
+          setPreviewStatus("فشل التشغيل في المتصفح.", "fail");
+        }, { once: true });
+      } else {
+        setPreviewStatus(
+          "لم يتم تحميل مكتبة hls.js (لا يوجد اتصال بالإنترنت؟) والمتصفح لا يدعم HLS مباشرة.",
+          "fail"
+        );
+      }
+    }
+
+    function stopPreviewPlayback() {
+      const video = $("previewVideo");
+      if (hlsInstance) {
+        hlsInstance.destroy();
+        hlsInstance = null;
+      }
+      // مستمع "playing" المعلّق من معاينة سابقة يجب ألا يعلّم القناة التالية
+      if (onPreviewPlaying) {
+        video.removeEventListener("playing", onPreviewPlaying);
+        onPreviewPlaying = null;
+      }
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+    }
+
+    function closePreview() {
+      stopPreviewPlayback();
+      previewDialog.close();
+    }
+
+    // ===== إعدادات GitHub والحفظ المباشر =====
+
+    function loadGhConfig() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(GH_KEY) || "{}");
+        gh = { branch: "main", path: "channels.json", ...gh, ...saved };
+      } catch { /* تجاهل الإعدادات التالفة */ }
+      updateGhLabel();
+    }
+
+    function updateGhLabel() {
+      $("ghRepoLabel").textContent = gh.owner && gh.repo
+        ? `${gh.owner}/${gh.repo}`
+        : "غير مضبوط";
+    }
+
+    function openGhDialog() {
+      $("ghOwner").value = gh.owner;
+      $("ghRepo").value = gh.repo;
+      $("ghBranch").value = gh.branch || "main";
+      $("ghPath").value = gh.path || "channels.json";
+      $("ghToken").value = gh.token;
+      ghDialog.showModal();
+    }
+
+    function saveGhConfig(event) {
+      event.preventDefault();
+      gh = {
+        owner: $("ghOwner").value.trim(),
+        repo: $("ghRepo").value.trim(),
+        branch: $("ghBranch").value.trim() || "main",
+        path: $("ghPath").value.trim() || "channels.json",
+        token: $("ghToken").value.trim()
+      };
+      localStorage.setItem(GH_KEY, JSON.stringify(gh));
+      updateGhLabel();
+      ghDialog.close();
+      showToast("تم حفظ إعدادات GitHub في هذا المتصفح.");
+    }
+
+    /** ترميز نص UTF-8 إلى Base64 (btoa وحدها لا تدعم العربية) */
+    function toBase64Utf8(text) {
+      const bytes = new TextEncoder().encode(text);
+      let binary = "";
+      for (const b of bytes) binary += String.fromCharCode(b);
+      return btoa(binary);
+    }
+
+    async function saveToGitHub() {
+      if (!gh.owner || !gh.repo || !gh.token) {
+        showToast("اضبط أولًا اسم المستخدم والمستودع ورمز الوصول من «إعدادات GitHub».");
+        openGhDialog();
+        return;
+      }
+
+      const button = $("ghSaveBtn");
+      button.disabled = true;
+      button.textContent = "☁ جارٍ الحفظ…";
+
+      const api = `https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/${gh.path}`;
+      const headers = {
+        Authorization: `Bearer ${gh.token}`,
+        Accept: "application/vnd.github+json"
+      };
+
+      try {
+        // جلب sha النسخة الحالية (مطلوب للتعديل؛ غيابه يعني ملفًا جديدًا)
+        let sha;
+        const head = await fetch(`${api}?ref=${gh.branch}&ts=${Date.now()}`, { headers, cache: "no-store" });
+        if (head.ok) {
+          sha = (await head.json()).sha;
+        } else if (head.status !== 404) {
+          throw new Error(`تعذر قراءة الملف من GitHub (HTTP ${head.status})`);
+        }
+
+        const content = toBase64Utf8(JSON.stringify(catalog, null, 2) + "\n");
+        const response = await fetch(api, {
+          method: "PUT",
+          headers,
+          body: JSON.stringify({
+            message: `تحديث القنوات عبر لوحة الإدارة — ${new Date().toISOString().slice(0, 16).replace("T", " ")}`,
+            content,
+            branch: gh.branch,
+            ...(sha ? { sha } : {})
+          })
+        });
+
+        if (!response.ok) {
+          const detail = await response.json().catch(() => ({}));
+          throw new Error(detail.message || `HTTP ${response.status}`);
+        }
+
+        setDirty(false);
+        $("sourceLabel").textContent = `${gh.owner}/${gh.repo}`;
+        showToast("تم الحفظ إلى GitHub ✓ — اضغط «تحديث» في التطبيق لجلب الجديد.");
+      } catch (error) {
+        console.error(error);
+        showToast(`فشل الحفظ إلى GitHub: ${error.message}`);
+      } finally {
+        button.disabled = false;
+        button.textContent = "☁ حفظ إلى GitHub";
+      }
+    }
+
+    // ===== إضافة/تعديل/حذف =====
+
+    function openAddDialog() {
+      editingOriginalId = null;
+      $("dialogTitle").textContent = "إضافة قناة";
+      form.reset();
+
+      const maxNumber = catalog.channels.reduce((max, channel) =>
+        Math.max(max, Number(channel.number) || 0), 0
+      );
+      $("channelNumber").value = maxNumber + 1;
+
+      dialog.showModal();
+      $("channelName").focus();
+    }
+
+    function openEditDialog(id) {
+      const channel = catalog.channels.find(item => item.id === id);
+      if (!channel) return;
+
+      editingOriginalId = id;
+      $("dialogTitle").textContent = "تعديل القناة";
+      $("channelNumber").value = channel.number;
+      $("channelId").value = channel.id;
+      $("channelName").value = channel.name;
+      $("channelCategory").value = channel.category;
+      $("channelUrl").value = channel.url;
+      $("channelLogo").value = channel.logo;
+      $("channelEpgId").value = channel.epgId;
+      dialog.showModal();
+    }
+
+    function closeDialog() {
+      dialog.close();
+      form.reset();
+      editingOriginalId = null;
+    }
+
+    function saveChannel(event) {
+      event.preventDefault();
+
+      const channel = {
+        number: Number($("channelNumber").value),
+        id: $("channelId").value.trim(),
+        name: $("channelName").value.trim(),
+        category: $("channelCategory").value.trim(),
+        url: $("channelUrl").value.trim(),
+        logo: $("channelLogo").value.trim(),
+        epgId: $("channelEpgId").value.trim()
+      };
+
+      const duplicate = catalog.channels.some(item =>
+        item.id === channel.id && item.id !== editingOriginalId
+      );
+
+      if (duplicate) {
+        showToast("المعرّف ID مستخدم لقناة أخرى.");
+        $("channelId").focus();
+        return;
+      }
+
+      if (!channel.id || !channel.name || !channel.category || !channel.url || !channel.number) {
+        showToast("أكمل الحقول المطلوبة.");
+        return;
+      }
+
+      if (editingOriginalId) {
+        const index = catalog.channels.findIndex(item => item.id === editingOriginalId);
+        catalog.channels[index] = channel;
+        // الرابط ربما تغيّر؛ نتيجة الفحص القديمة لم تعد صالحة
+        streamStatus.delete(editingOriginalId);
+        showToast("تم تعديل القناة.");
+      } else {
+        catalog.channels.push(channel);
+        showToast("تمت إضافة القناة.");
+      }
+
+      setDirty(true);
+      closeDialog();
+      render();
+    }
+
+    function deleteChannel(id) {
+      const channel = catalog.channels.find(item => item.id === id);
+      if (!channel) return;
+
+      if (!confirm(`حذف قناة "${channel.name}"؟`)) return;
+
+      catalog.channels = catalog.channels.filter(item => item.id !== id);
+      streamStatus.delete(id);
+      setDirty(true);
+      render();
+      showToast("تم حذف القناة.");
+    }
+
+    // ===== تنزيل/نسخ/استيراد =====
+
+    function downloadJson() {
+      const content = JSON.stringify(catalog, null, 2);
+      const blob = new Blob([content], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "channels.json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setDirty(false);
+      showToast("تم تنزيل channels.json.");
+    }
+
+    async function copyJson() {
+      try {
+        await navigator.clipboard.writeText(JSON.stringify(catalog, null, 2));
+        showToast("تم نسخ JSON.");
+      } catch {
+        showToast("تعذر النسخ؛ استخدم زر التنزيل.");
+      }
+    }
+
+    async function importJson(file) {
+      if (!file) return;
+      try {
+        const text = await file.text();
+        catalog = normalizeCatalog(JSON.parse(text));
+        streamStatus.clear();
+        $("sourceLabel").textContent = file.name;
+        $("loadedAt").textContent = new Date().toLocaleString("ar");
+        setDirty(true);
+        render();
+        showToast("تم استيراد الملف.");
+      } catch (error) {
+        console.error(error);
+        showToast(error.message || "ملف JSON غير صالح.");
+      } finally {
+        $("fileInput").value = "";
+      }
+    }
+
+    // ===== ربط الأحداث =====
+
+    body.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-action]");
+      if (!button) return;
+      const { action, id } = button.dataset;
+      const channel = catalog.channels.find(item => item.id === id);
+      if (!channel) return;
+      if (action === "edit") openEditDialog(id);
+      if (action === "delete") deleteChannel(id);
+      if (action === "preview") openPreview(channel);
+      if (action === "check") checkChannel(channel);
+    });
+
+    $("addBtn").addEventListener("click", openAddDialog);
+    $("downloadBtn").addEventListener("click", downloadJson);
+    $("copyBtn").addEventListener("click", copyJson);
+    $("importBtn").addEventListener("click", () => $("fileInput").click());
+    $("fileInput").addEventListener("change", (event) => importJson(event.target.files[0]));
+    $("checkAllBtn").addEventListener("click", checkAllChannels);
+
+    $("ghSettingsBtn").addEventListener("click", openGhDialog);
+    $("ghSaveBtn").addEventListener("click", saveToGitHub);
+    $("ghForm").addEventListener("submit", saveGhConfig);
+    $("closeGhBtn").addEventListener("click", () => ghDialog.close());
+    $("cancelGhBtn").addEventListener("click", () => ghDialog.close());
+    $("clearGhBtn").addEventListener("click", () => {
+      gh.token = "";
+      localStorage.setItem(GH_KEY, JSON.stringify(gh));
+      $("ghToken").value = "";
+      showToast("تم مسح رمز الوصول من هذا المتصفح.");
+    });
+
+    $("reloadBtn").addEventListener("click", () => {
+      if (dirty && !confirm("سيتم تجاهل التعديلات الحالية وإعادة تحميل ملف GitHub. متابعة؟")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      streamStatus.clear();
+      loadFromServer(true);
+    });
+
+    $("searchInput").addEventListener("input", render);
+    $("categoryFilter").addEventListener("change", render);
+    $("sortSelect").addEventListener("change", render);
+
+    form.addEventListener("submit", saveChannel);
+    $("closeDialogBtn").addEventListener("click", closeDialog);
+    $("cancelBtn").addEventListener("click", closeDialog);
+    $("previewFormBtn").addEventListener("click", () => {
+      const url = $("channelUrl").value.trim();
+      if (!url) {
+        showToast("أدخل رابط البث أولًا.");
+        return;
+      }
+      openPreview({
+        id: $("channelId").value.trim() || "__draft__",
+        number: Number($("channelNumber").value) || 0,
+        name: $("channelName").value.trim() || "قناة جديدة",
+        url
+      });
+    });
+
+    $("closePreviewBtn").addEventListener("click", closePreview);
+    previewDialog.addEventListener("cancel", stopPreviewPlayback);
+    previewDialog.addEventListener("close", stopPreviewPlayback);
+    $("copyUrlBtn").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText($("previewUrl").textContent);
+        showToast("تم نسخ رابط البث.");
+      } catch {
+        showToast("تعذر النسخ.");
+      }
+    });
+
+    dialog.addEventListener("click", (event) => {
+      const rect = dialog.getBoundingClientRect();
+      const inside = (
+        event.clientX >= rect.left && event.clientX <= rect.right &&
+        event.clientY >= rect.top && event.clientY <= rect.bottom
+      );
+      if (!inside) closeDialog();
+    });
+
+    window.addEventListener("beforeunload", (event) => {
+      if (!dirty) return;
+      event.preventDefault();
+      event.returnValue = "";
+    });
+
+    loadGhConfig();
+    loadFromServer();
+  </script>
+</body>
+</html>
