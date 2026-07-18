@@ -174,12 +174,12 @@
       "epgId": "IqraaQuran.sa"
     },
     {
-      "id": "alresalah",
       "number": 34,
+      "id": "alresalah",
       "name": "قناة الرسالة",
-      "url": "https://rotana.hibridcdn.net/rotananet/risala_net-7Y83PP5adWixDF93/playlist.m3u8",
-      "logo": "https://i.imgur.com/7o4HgrP.png",
       "category": "دينية",
+      "url": "https://live.hibridmedia.com/rotana/risala_net-7Y83PP5adWixDF93/playlist.m3u8",
+      "logo": "https://i.imgur.com/7o4HgrP.png",
       "epgId": "AlResalah.sa"
     },
     {
@@ -271,42 +271,6 @@
       "logo": "https://i.imgur.com/cTLj7Yt.png",
       "category": "مسلسلات وأفلام",
       "epgId": "Aflam.sa"
-    },
-    {
-      "id": "rotana-cinema",
-      "number": 48,
-      "name": "روتانا سينما",
-      "url": "https://rotana.hibridcdn.net/rotananet/cinema_net-7Y83PP5adWixDF93/playlist.m3u8",
-      "logo": "https://i.imgur.com/pGgp38I.png",
-      "category": "مسلسلات وأفلام",
-      "epgId": "RotanaCinemaKSA.sa"
-    },
-    {
-      "id": "rotana-drama",
-      "number": 49,
-      "name": "روتانا دراما",
-      "url": "https://rotana.hibridcdn.net/rotananet/drama_net-7Y83PP5adWixDF93/playlist.m3u8",
-      "logo": "https://i.imgur.com/btnhPjZ.png",
-      "category": "مسلسلات وأفلام",
-      "epgId": "RotanaDrama.sa"
-    },
-    {
-      "id": "rotana-classic",
-      "number": 50,
-      "name": "روتانا كلاسيك",
-      "url": "https://rotana.hibridcdn.net/rotananet/classical_net-7Y83PP5adWixDF93/playlist.m3u8",
-      "logo": "https://i.imgur.com/pMMUvkt.png",
-      "category": "مسلسلات وأفلام",
-      "epgId": "RotanaClassic.sa"
-    },
-    {
-      "id": "rotana-comedy",
-      "number": 51,
-      "name": "روتانا كوميدي",
-      "url": "https://rotana.hibridcdn.net/rotananet/comedy_net-7Y83PP5adWixDF93/playlist.m3u8",
-      "logo": "https://i.imgur.com/IlT8U6S.png",
-      "category": "مسلسلات وأفلام",
-      "epgId": "RotanaComedy.sa"
     },
     {
       "id": "thikrayat",
@@ -426,31 +390,13 @@
       "epgId": "AtfalMawahebTV.sa"
     },
     {
-      "id": "test-apple",
-      "number": 90,
-      "name": "بث تجريبي 1 (Apple)",
-      "url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
-      "logo": "",
-      "category": "تجريبي",
-      "epgId": ""
-    },
-    {
-      "id": "test-mux",
-      "number": 91,
-      "name": "بث تجريبي 2 (Mux)",
-      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
-      "logo": "",
-      "category": "تجريبي",
-      "epgId": ""
-    },
-    {
-      "id": "test-unified",
-      "number": 92,
-      "name": "بث تجريبي 3 (Tears of Steel)",
-      "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
-      "logo": "",
-      "category": "تجريبي",
-      "epgId": ""
+      "number": 66,
+      "id": "cartoon-network-arabic",
+      "name": "كرتون نتورك بالعربية",
+      "category": "أطفال",
+      "url": "https://shls-cartoon-net-prod-dub.shahid.net/out/v1/dc4aa87372374325a66be458f29eab0f/index.m3u8",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Cartoon_Network_Arabic_logo.png/512px-Cartoon_Network_Arabic_logo.png",
+      "epgId": "CartoonNetworkArabic.ae"
     }
   ]
 }
