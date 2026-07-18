@@ -41,7 +41,7 @@
     {
       "id": "skynews-arabia",
       "number": 5,
-      "name": "سكاي نيوز عربية",
+      "name": "سكاي نيوز عربية "name": "سكاي نيوز عربية",
       "url": "https://stream.skynewsarabia.com/hls/sna_720.m3u8",
       "logo": "https://i.imgur.com/SvjU4h6.png",
       "category": "أخبار",
@@ -129,6 +129,33 @@
       "epgId": "AlJazeeraDocumentary.qa"
     },
     {
+      "id": "asharq-discovery",
+      "number": 21,
+      "name": "الشرق Discovery",
+      "url": "https://svs.itworkscdn.net/asharqdiscoverylive/asharqd.smil/playlist_dvr.m3u8",
+      "logo": "https://i.imgur.com/Czxi7yk.png",
+      "category": "وثائقية",
+      "epgId": "AsharqDiscovery.sa"
+    },
+    {
+      "id": "asharq-documentary",
+      "number": 22,
+      "name": "الشرق الوثائقية",
+      "url": "https://svs.itworkscdn.net/asharqdocumentarylive/asharqdocumentary.smil/playlist_dvr.m3u8",
+      "logo": "https://i.imgur.com/v6VsFEt.png",
+      "category": "وثائقية",
+      "epgId": "AsharqDocumentary.sa"
+    },
+    {
+      "id": "alarabiya-programs",
+      "number": 23,
+      "name": "العربية برامج",
+      "url": "https://live.alarabiya.net/alarabiapublish/aaprograms.smil/playlist.m3u8",
+      "logo": "https://i.imgur.com/Hoc3cfO.png",
+      "category": "وثائقية",
+      "epgId": "AlArabiyaPrograms.ae"
+    },
+    {
       "id": "quran-tv",
       "number": 30,
       "name": "قناة القرآن الكريم",
@@ -165,12 +192,12 @@
       "epgId": "IqraaQuran.sa"
     },
     {
-      "number": 34,
       "id": "alresalah",
+      "number": 34,
       "name": "قناة الرسالة",
-      "category": "دينية",
       "url": "https://live.hibridmedia.com/rotana/risala_net-7Y83PP5adWixDF93/playlist.m3u8",
       "logo": "https://i.imgur.com/7o4HgrP.png",
+      "category": "دينية",
       "epgId": "AlResalah.sa"
     },
     {
@@ -372,40 +399,13 @@
       "epgId": "AtfalMawahebTV.sa"
     },
     {
-      "number": 66,
       "id": "cartoon-network-arabic",
+      "number": 66,
       "name": "كرتون نتورك بالعربية",
-      "category": "أطفال",
       "url": "https://shls-cartoon-net-prod-dub.shahid.net/out/v1/dc4aa87372374325a66be458f29eab0f/index.m3u8",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Cartoon_Network_Arabic_logo.png/512px-Cartoon_Network_Arabic_logo.png",
+      "category": "أطفال",
       "epgId": "CartoonNetworkArabic.ae"
-    },
-    {
-  "id": "asharq-discovery",
-  "number": 21,
-  "name": "الشرق Discovery",
-  "url": "https://svs.itworkscdn.net/asharqdiscoverylive/asharqd.smil/playlist_dvr.m3u8",
-  "logo": "https://i.imgur.com/Czxi7yk.png",
-  "category": "وثائقية",
-  "epgId": "AsharqDiscovery.sa"
-},
-    {
-  "id": "asharq-documentary",
-  "number": 22,
-  "name": "الشرق الوثائقية",
-  "url": "https://svs.itworkscdn.net/asharqdocumentarylive/asharqdocumentary.smil/playlist_dvr.m3u8",
-  "logo": "https://i.imgur.com/v6VsFEt.png",
-  "category": "وثائقية",
-  "epgId": "AsharqDocumentary.sa"
-},
-    {
-  "id": "alarabiya-programs",
-  "number": 23,
-  "name": "العربية برامج",
-  "url": "https://live.alarabiya.net/alarabiapublish/aaprograms.smil/playlist.m3u8",
-  "logo": "https://i.imgur.com/Hoc3cfO.png",
-  "category": "وثائقية",
-  "epgId": "AlArabiyaPrograms.ae"
-}
+    }
   ]
 }
