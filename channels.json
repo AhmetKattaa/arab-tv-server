@@ -246,15 +246,6 @@
       "epgId": "MBCMasrDrama.sa"
     },
     {
-      "id": "mbc-bollywood",
-      "number": 46,
-      "name": "إم بي سي بوليوود",
-      "url": "https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-bollywood/546eb40d7dcf9a209255dd2496903764/index.m3u8",
-      "logo": "https://i.imgur.com/TTAGFHG.png",
-      "category": "مسلسلات وأفلام",
-      "epgId": "MBCBollywood.ae"
-    },
-    {
       "id": "aflam",
       "number": 47,
       "name": "أفلام",
