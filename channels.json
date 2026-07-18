@@ -381,13 +381,31 @@
       "epgId": "CartoonNetworkArabic.ae"
     },
     {
-      "number": 21,
-      "id": "national-geographic-abu-dhabi",
-      "name": "ناشيونال جيوغرافيك أبوظبي",
-      "category": "وثائقية",
-      "url": "https://admn-live-cdn-lb.starzplayarabia.com/out/v1/admn_tv_enc/national_geo/national_geo_hls_nd/index.m3u8",
-      "logo": "https://i.imgur.com/fNA00VF.png",
-      "epgId": "NationalGeographicAbuDhabi.ae"
-    }
+  "id": "asharq-discovery",
+  "number": 21,
+  "name": "الشرق Discovery",
+  "url": "https://svs.itworkscdn.net/asharqdiscoverylive/asharqd.smil/playlist_dvr.m3u8",
+  "logo": "https://i.imgur.com/Czxi7yk.png",
+  "category": "وثائقية",
+  "epgId": "AsharqDiscovery.sa"
+},
+    {
+  "id": "asharq-documentary",
+  "number": 22,
+  "name": "الشرق الوثائقية",
+  "url": "https://svs.itworkscdn.net/asharqdocumentarylive/asharqdocumentary.smil/playlist_dvr.m3u8",
+  "logo": "https://i.imgur.com/v6VsFEt.png",
+  "category": "وثائقية",
+  "epgId": "AsharqDocumentary.sa"
+},
+    {
+  "id": "alarabiya-programs",
+  "number": 23,
+  "name": "العربية برامج",
+  "url": "https://live.alarabiya.net/alarabiapublish/aaprograms.smil/playlist.m3u8",
+  "logo": "https://i.imgur.com/Hoc3cfO.png",
+  "category": "وثائقية",
+  "epgId": "AlArabiyaPrograms.ae"
+}
   ]
 }
